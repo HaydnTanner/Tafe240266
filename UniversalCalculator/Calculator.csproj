@@ -122,6 +122,7 @@
     <Compile Include="CurrencyPage.xaml.cs">
       <DependentUpon>CurrencyPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CurrencyValues.cs" />
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>

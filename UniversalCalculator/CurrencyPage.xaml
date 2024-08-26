@@ -22,11 +22,11 @@
 			<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
 				<StackPanel Padding="10">
 					<TextBlock FontSize="40">Amount:</TextBlock>
-					<TextBox Width="300" Height="75" TextAlignment="Center" Text="1"></TextBox>
+					<TextBox x:Name="CurrencyInput" Width="300" Height="75" TextAlignment="Center" Text="1"></TextBox>
 				</StackPanel>
 				<StackPanel Padding="10">
 					<TextBlock FontSize="40">From:</TextBlock>
-					<ComboBox Width="300" Height="75" SelectedIndex="0">
+					<ComboBox x:Name="ConvertFromComboBox" Width="300" Height="75" SelectedIndex="0">
 						<ComboBoxItem>US Dollar</ComboBoxItem>
 						<ComboBoxItem>Euro</ComboBoxItem>
 						<ComboBoxItem>British</ComboBoxItem>
@@ -35,7 +35,7 @@
 				</StackPanel>
 				<StackPanel Padding="10">
 					<TextBlock FontSize="40">To:</TextBlock>
-					<ComboBox Width="300" Height="75" SelectedIndex="1">
+					<ComboBox x:Name="ConvertToComboBox" Width="300" Height="75" SelectedIndex="1">
 						<ComboBoxItem>US Dollar</ComboBoxItem>
 						<ComboBoxItem>Euro</ComboBoxItem>
 						<ComboBoxItem>British</ComboBoxItem>
@@ -51,7 +51,7 @@
 				<TextBlock FontSize="30" x:Name="OneUnitConversionTo">temp</TextBlock>
 			</StackPanel>
 			<StackPanel Grid.Row="3" HorizontalAlignment="Center">
-				<Button Height="100" Content="Currency Conversion" FontSize="50" HorizontalAlignment="Center" Margin="10"></Button>
+				<Button x:Name="CalculateButton" Height="100" Content="Currency Conversion" FontSize="50" HorizontalAlignment="Center" Margin="10" Click="CalculateButton_Click"></Button>
 				<Button Height="100" Content="Exit" FontSize="50" HorizontalAlignment="Center" Margin="10"></Button>
 			</StackPanel>
 		</Grid>
