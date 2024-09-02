@@ -23,10 +23,11 @@ namespace Calculator
 	public sealed partial class CurrencyPage : Page
 	{
 
-		private CurrencyValues FromUSD = new CurrencyValues(1, 0.85189982, 0.72872436, 74.257327, "$", "US Dollars");
-		private CurrencyValues FromEuro = new CurrencyValues(1.1739732, 1, 0.8556672, 87.00755, "€", "Euros");
-		private CurrencyValues FromBritishPound = new CurrencyValues(1.371907, 1.1686692, 1, 101.68635, "£", "British Pounds");
-		private CurrencyValues FromIndianRupee = new CurrencyValues(0.011492628, 0.013492774, 0.0098339397, 1, "₹", "Indian Rupees");
+
+		private CurrencyValues FromUSD = new CurrencyValues(1, 0.85189982, 0.72872436, 74.257327, "$", "US Dollar");
+		private CurrencyValues FromEuro = new CurrencyValues(1.1739732, 1, 0.8556672, 87.00755, "€", "Euro");
+		private CurrencyValues FromBritishPound = new CurrencyValues(1.371907, 1.1686692, 1, 101.68635, "£", "British Pound");
+		private CurrencyValues FromIndianRupee = new CurrencyValues(0.011492628, 0.013492774, 0.0098339397, 1, "₹", "Indian Rupee");
 
 		enum CurrencyIDs
 		{
@@ -40,6 +41,13 @@ namespace Calculator
 		public CurrencyPage()
 		{
 			this.InitializeComponent();
+
+		}
+
+
+		private void Page_Loaded(object sender, RoutedEventArgs e)
+		{
+			CalculateButton_Click(sender, e);
 		}
 
 		private void CalculateButton_Click(object sender, RoutedEventArgs e)
@@ -47,54 +55,82 @@ namespace Calculator
 
 			//error checking for currency input
 
-			CurrencyValues SelectedValues = null;
+			CurrencyValues FromValues = null;
+			CurrencyValues ToValues = null;
 
+
+			//Two switch statements to figure out which currencys the user wants to convert
 			switch (ConvertFromComboBox.SelectedIndex)
 			{
 				case (int)CurrencyIDs.USDollar:
-					SelectedValues = FromUSD;
+					FromValues = FromUSD;
 					break;
 				case (int)CurrencyIDs.Euro:
-					SelectedValues = FromEuro;
+					FromValues = FromEuro;
 					break;
 				case (int)CurrencyIDs.BritishPound:
-					SelectedValues = FromBritishPound;
+					FromValues = FromBritishPound;
 					break;
 				case (int)CurrencyIDs.IdianRupee:
-					SelectedValues = FromIndianRupee;
+					FromValues = FromIndianRupee;
+					break;
+			}
+			switch (ConvertToComboBox.SelectedIndex)
+			{
+				case (int)CurrencyIDs.USDollar:
+					ToValues = FromUSD;
+					break;
+				case (int)CurrencyIDs.Euro:
+					ToValues = FromEuro;
+					break;
+				case (int)CurrencyIDs.BritishPound:
+					ToValues = FromBritishPound;
+					break;
+				case (int)CurrencyIDs.IdianRupee:
+					ToValues = FromIndianRupee;
 					break;
 			}
 
-			if (SelectedValues == null)
+			//check if there has been a error with selecting the currencys
+			if (FromValues == null || ToValues == null)
 				return;
 
-			double Converted = ConvertCurrency(SelectedValues, ConvertToComboBox.SelectedIndex, double.Parse(CurrencyInput.Text));
+			//convert the users inputed amount
+			double Converted = ConvertCurrency(FromValues, ToValues.Name, double.Parse(CurrencyInput.Text));
+			//output the date on to the page
+			UserCurrencyOutput.Text = $"{CurrencyInput.Text} {FromValues.Name} =";
+			UserCurrencyConversionOutput.Text = $"{ToValues.Symbol}{Converted} {ToValues.Name}";
 
+			//the bellow code could be done better as it is currently calculating values from one unit of currencys
+			//however the base numbers in the CurrencyValues classes are already the expected values from the calculations
+			//so it would be best to create a way to get these numbers in stead of calculating them
+			Converted = ConvertCurrency(FromValues, ToValues.Name, 1);
+			OneUnitConversionFrom.Text = $"1 {FromValues.Name} = {Converted} {ToValues.Name}";
 
-			UserCurrencyOutput.Text = $"{CurrencyInput.Text} {SelectedValues.Name} =";
-			UserCurrencyConversionOutput.Text = $"{Converted} ";
-
-
+			Converted = ConvertCurrency(ToValues, FromValues.Name, 1);
+			OneUnitConversionTo.Text = $"1 {ToValues.Name} = {Converted} {FromValues.Name}";
 		}
 
 
-		private double ConvertCurrency(CurrencyValues From, int To, double toConvert)
+		private double ConvertCurrency(CurrencyValues From, string ToName, double toConvert)
 		{
-			switch(To)
+
+			//i dont like having hard coded values here in the switch statement
+			switch (ToName)
 			{
-				case (int)CurrencyIDs.USDollar:
+				case "US Dollar":
 					return toConvert * From.USD;
-				case (int)CurrencyIDs.Euro:
+				case "Euro":
 					return toConvert * From.Euro;
-				case (int)CurrencyIDs.BritishPound:
+				case "British Pound":
 					return toConvert * From.BritishPound;
-				case (int)CurrencyIDs.IdianRupee:
+				case "Indian Rupee":
 					return toConvert * From.IndianRupee;
 			}
 
+			//return -1 if there is a error
 			return -1;
 		}
-
 
 	}
 }

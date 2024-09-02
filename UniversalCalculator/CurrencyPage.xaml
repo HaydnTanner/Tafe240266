@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="Page_Loaded">
 
     <Grid>
 		<Grid>
@@ -29,7 +29,7 @@
 					<ComboBox x:Name="ConvertFromComboBox" Width="300" Height="75" SelectedIndex="0">
 						<ComboBoxItem>US Dollar</ComboBoxItem>
 						<ComboBoxItem>Euro</ComboBoxItem>
-						<ComboBoxItem>British</ComboBoxItem>
+						<ComboBoxItem>British Pound</ComboBoxItem>
 						<ComboBoxItem>Indian Rupee</ComboBoxItem>
 					</ComboBox>
 				</StackPanel>
@@ -38,7 +38,7 @@
 					<ComboBox x:Name="ConvertToComboBox" Width="300" Height="75" SelectedIndex="1">
 						<ComboBoxItem>US Dollar</ComboBoxItem>
 						<ComboBoxItem>Euro</ComboBoxItem>
-						<ComboBoxItem>British</ComboBoxItem>
+						<ComboBoxItem>British Pound</ComboBoxItem>
 						<ComboBoxItem>Indian Rupee</ComboBoxItem>
 					</ComboBox>
 				</StackPanel>
