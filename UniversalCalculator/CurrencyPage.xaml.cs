@@ -54,61 +54,70 @@ namespace Calculator
 		{
 
 			//error checking for currency input
-
-			CurrencyValues FromValues = null;
-			CurrencyValues ToValues = null;
-
-
-			//Two switch statements to figure out which currencys the user wants to convert
-			switch (ConvertFromComboBox.SelectedIndex)
+			try
 			{
-				case (int)CurrencyIDs.USDollar:
-					FromValues = FromUSD;
-					break;
-				case (int)CurrencyIDs.Euro:
-					FromValues = FromEuro;
-					break;
-				case (int)CurrencyIDs.BritishPound:
-					FromValues = FromBritishPound;
-					break;
-				case (int)CurrencyIDs.IdianRupee:
-					FromValues = FromIndianRupee;
-					break;
+				CurrencyValues FromValues = null;
+				CurrencyValues ToValues = null;
+
+
+				//Two switch statements to figure out which currencys the user wants to convert
+				switch (ConvertFromComboBox.SelectedIndex)
+				{
+					case (int)CurrencyIDs.USDollar:
+						FromValues = FromUSD;
+						break;
+					case (int)CurrencyIDs.Euro:
+						FromValues = FromEuro;
+						break;
+					case (int)CurrencyIDs.BritishPound:
+						FromValues = FromBritishPound;
+						break;
+					case (int)CurrencyIDs.IdianRupee:
+						FromValues = FromIndianRupee;
+						break;
+				}
+				switch (ConvertToComboBox.SelectedIndex)
+				{
+					case (int)CurrencyIDs.USDollar:
+						ToValues = FromUSD;
+						break;
+					case (int)CurrencyIDs.Euro:
+						ToValues = FromEuro;
+						break;
+					case (int)CurrencyIDs.BritishPound:
+						ToValues = FromBritishPound;
+						break;
+					case (int)CurrencyIDs.IdianRupee:
+						ToValues = FromIndianRupee;
+						break;
+				}
+
+				//check if there has been a error with selecting the currencys
+				if (FromValues == null || ToValues == null)
+					return;
+
+				//convert the users inputed amount
+				double Converted = ConvertCurrency(FromValues, ToValues.Name, double.Parse(CurrencyInput.Text));
+				//output the date on to the page
+				UserCurrencyOutput.Text = $"{CurrencyInput.Text} {FromValues.Name} =";
+				UserCurrencyConversionOutput.Text = $"{ToValues.Symbol}{Converted} {ToValues.Name}";
+
+				//the bellow code could be done better as it is currently calculating values from one unit of currencys
+				//however the base numbers in the CurrencyValues classes are already the expected values from the calculations
+				//so it would be best to create a way to get these numbers in stead of calculating them
+				Converted = ConvertCurrency(FromValues, ToValues.Name, 1);
+				OneUnitConversionFrom.Text = $"1 {FromValues.Name} = {Converted} {ToValues.Name}";
+
+				Converted = ConvertCurrency(ToValues, FromValues.Name, 1);
+				OneUnitConversionTo.Text = $"1 {ToValues.Name} = {Converted} {FromValues.Name}";
 			}
-			switch (ConvertToComboBox.SelectedIndex)
+			catch
 			{
-				case (int)CurrencyIDs.USDollar:
-					ToValues = FromUSD;
-					break;
-				case (int)CurrencyIDs.Euro:
-					ToValues = FromEuro;
-					break;
-				case (int)CurrencyIDs.BritishPound:
-					ToValues = FromBritishPound;
-					break;
-				case (int)CurrencyIDs.IdianRupee:
-					ToValues = FromIndianRupee;
-					break;
+				UserCurrencyOutput.Text = "Error";
+				UserCurrencyConversionOutput.Text = "Only input a numeric value";
+				OneUnitConversionFrom.Text = "";
+				OneUnitConversionTo.Text = "";
 			}
-
-			//check if there has been a error with selecting the currencys
-			if (FromValues == null || ToValues == null)
-				return;
-
-			//convert the users inputed amount
-			double Converted = ConvertCurrency(FromValues, ToValues.Name, double.Parse(CurrencyInput.Text));
-			//output the date on to the page
-			UserCurrencyOutput.Text = $"{CurrencyInput.Text} {FromValues.Name} =";
-			UserCurrencyConversionOutput.Text = $"{ToValues.Symbol}{Converted} {ToValues.Name}";
-
-			//the bellow code could be done better as it is currently calculating values from one unit of currencys
-			//however the base numbers in the CurrencyValues classes are already the expected values from the calculations
-			//so it would be best to create a way to get these numbers in stead of calculating them
-			Converted = ConvertCurrency(FromValues, ToValues.Name, 1);
-			OneUnitConversionFrom.Text = $"1 {FromValues.Name} = {Converted} {ToValues.Name}";
-
-			Converted = ConvertCurrency(ToValues, FromValues.Name, 1);
-			OneUnitConversionTo.Text = $"1 {ToValues.Name} = {Converted} {FromValues.Name}";
 		}
 
 
