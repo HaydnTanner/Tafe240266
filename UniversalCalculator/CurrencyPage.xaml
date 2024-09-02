@@ -52,7 +52,7 @@
 			</StackPanel>
 			<StackPanel Grid.Row="3" HorizontalAlignment="Center">
 				<Button x:Name="CalculateButton" Height="100" Content="Currency Conversion" FontSize="50" HorizontalAlignment="Center" Margin="10" Click="CalculateButton_Click"></Button>
-				<Button Height="100" Content="Exit" FontSize="50" HorizontalAlignment="Center" Margin="10"></Button>
+				<Button x:Name="ExitButton" Height="100" Content="Exit" FontSize="50" HorizontalAlignment="Center" Margin="10" Click="ExitButton_Click"></Button>
 			</StackPanel>
 		</Grid>
     </Grid>

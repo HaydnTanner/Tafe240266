@@ -141,5 +141,9 @@ namespace Calculator
 			return -1;
 		}
 
+		private void ExitButton_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(MainMenu));
+		}
 	}
 }
